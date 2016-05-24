@@ -1,0 +1,12 @@
+let res = []
+let data = {}
+for (let item of arr) {
+	if (typeof data[item.type]  === 'undefined') {
+		data[item.type] = 0
+	} 
+	data[item.type] += item.cont
+}
+
+for (let item in data) {
+	res.push({type: item, count: data[item]})
+}
