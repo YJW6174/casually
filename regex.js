@@ -63,3 +63,26 @@ PS:
  QUESTION:
  /[0-100]/g 匹配的是啥
  */
+
+
+
+
+var re = /\d+/g;
+var str = 'cde       1243Aa er56 fg';
+var re2 = /\S+/g;
+console.log(str.match(re)); // [ '12', '23' ]
+console.log(str.match(re2)); // [ 'cde', 'ddd', '12de', 'cd23df', 'fg' ]
+console.log(str);
+//string.match 返回满足匹配的数组;
+
+var re = /\d/;
+var str = 'cdeAa er56    fg';
+console.log(str.search(re))
+    //返回str中匹配的位置,如果没有是-1
+    //QUESTION:STRING 有 match  方法,数组有吗?
+
+var re = /^\w+@[a-z0-9]+\.[a-z]+$/i;
+//邮箱校验
+var re = /\s+/g;
+console.log(str.replace(re, '')); //去空格
+console.log(str);
