@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    .content {
+        width: 100%;
+        border: 1px solid red;
+        margin-top: 20px;
+    }
+    
+    .msg {
+        display: none;
+    }
+    </style>
+
+</head>
+
+<body>
+    <div id="msgcontent">
+        <div class="content">
+            <input type="text" name="">
+            <button>点击显示消息</button>
+            <div class="msg">消息消息消息消息消息消息消息消息消息消息消息消息</div>
+        </div>
+        <div class="content">
+            <input type="text" name="">
+            <button>点击显示消息</button>
+            <div class="msg">12消息1312消息1312消息1312消息1312消息1312消息13</div>
+        </div>
+    </div>
+    <button id="btn">我是一个小buton</button>
+    <a id="myLink" href="http://www.baidu.com">baidu.com</a>
+    <ul id="myLinks">
+    	<li>111</li>
+    	<li>222</li>
+    	<li>333</li>
+    </ul>
+    <form  id="myform" action="" method="get">
+    	<input id="myName" type="text" name="name" value="yuanjunwen" xxx="xxxafa">
+    	<input type="text" name="age" value="20">
+    	<!-- <input type="submit"> -->
+    	<input type="text" pattern="\d{3}" name="count">
+    	<input type="image" src="a.jpg">
+    </form>
+</body>
+    <script type="text/javascript">
+    var EventUtil = {
+        addHandler: function(element, type, handler) {
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+        removeHandler: function(element, type, handler) {
+            if (element.removeEventListener) {
+                element.removeEventListener(type, handler, false);
+            } else if (element.detachEvent) {
+                element.detachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = null;
+            }
+        },
+        getEvent: function(event) {
+            return event ? event : window.event;
+        },
+        preventDefault: function(event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+        },
+        getTarget: function(event) {
+            return event.target || event.srcElement;
+        },
+        stopPropagation: function(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        }
+
+
+    }
+   // window.onload = function() {
+        var msgcontent = document.getElementById('msgcontent');
+        EventUtil.addHandler(msgcontent, "click", function() {
+           // alert("a");
+        })
+        var btn = document.getElementById('btn');
+        var handler = function(event) {
+            switch (event.type) {
+                case "click":
+                    alert("clicked");
+                    break;
+                case "mouseover":
+                    event.target.style.backgroundColor = "red";
+                    break;
+                case "mouseout":
+                    event.target.style.backgroundColor = "";
+                    break;
+            }
+        }
+        btn.onclick = handler;
+        btn.onmouseover = handler;
+        btn.onmouseout = handler;
+
+        var myLink = document.getElementById('myLink');
+        myLink.onclick = function(event) {
+            EventUtil.preventDefault(event);
+        }
+        EventUtil.addHandler(window,"load",function(event){
+        	//alert("load"+";"+event.type);
+        	var form=document.getElementById("myform");
+        	var myName=document.getElementById("myName");
+        	console.log(form.elements["name"].value);
+        	EventUtil.addHandler(myName,"focus",function(event){
+        		event=EventUtil.getEvent(event);
+        		var target=EventUtil.getTarget(event);
+        		console.log(target.value);
+        		target.select();
+        	})
+        })
+
+        //EventUtil.addEventListener
+
+  //  }
+
+
+  		var list=document.getElementById("myLinks");
+  		EventUtil.addHandler(list,"click",function(event){
+  			event=event||window.event;
+  			console.log(event.target+";"+event.currentTarget);
+  		})
+
+
+        EventUtil2={
+            addHandler:function(element,type,handler){
+                if (element.addEventListener) {
+                    element.addEventListener(type,handler,false);
+                }
+                else if (element.attachEvent) {
+                    element.attachEvent("on"+type,handler);
+                }
+                else{
+                    element["on"+type]=handler;
+                }
+            }
+        }
+
+
+
+
+
+    </script>
+</html>
