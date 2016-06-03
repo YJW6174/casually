@@ -86,3 +86,11 @@ var re = /^\w+@[a-z0-9]+\.[a-z]+$/i;
 var re = /\s+/g;
 console.log(str.replace(re, '')); //去空格
 console.log(str);
+
+//匹配24小时制时间
+function validateTime(time) {
+    console.log(time)
+    var reg = /^((0?|1)([0-9])|(2[0-3])):(([0-5])([0-9]))$/g;
+    res = reg.test(time); //regex here.test(time)
+    return res
+}
