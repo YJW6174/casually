@@ -1,0 +1,11 @@
+{
+  "name": "aafan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "aafan.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yjw6174@gmail.com",
+  "license": "ISC"
+}
