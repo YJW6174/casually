@@ -150,3 +150,280 @@
 			 return args;
 
 		}
+
+            function getStyle(obj,name){
+        if (obj.currentStyle) {
+            return obj.currentStyle[name];
+        }
+        else
+        {
+            return getComputedStyle(obj,false)[name];
+        }
+    }
+//json
+//startMove(oDiv,{height:400,width:400})    
+function startMove(obj,json,fnEnd){
+        clearInterval(obj.timer);
+        obj.timer=setInterval(function(){
+            var bStop=true;
+            //-----------------取出当前的值
+            for (var attr in json)
+            {
+            var cur=0;
+            if (attr=='opacity') {
+                cur=Math.round(parseFloat(getStyle(obj,attr)*100));
+            }
+            else{
+                cur=parseInt(getStyle(obj,attr));
+            }
+
+            //------------------速度
+            var speed=(json[attr]-cur)/6;
+            speed=speed>0?Math.ceil(speed):Math.floor(speed);
+
+            if (cur!=json[attr]) {
+                bStop==false;
+            };
+
+            //判断是否达到目标值
+                        if (cur==json[attr]) {
+                            clearInterval(obj.timer);
+                            if (fnEnd) {
+                                fnEnd()
+                            };
+                        } 
+                        else{
+                            //没有达到目标值，继续运动
+                            if (attr=='opacity') {
+                                obj.style.filter='alpha(opacity:'+(cur+speed)+')';
+                                obj.style.opacity=(cur+speed)/100;
+                                                  } 
+                            else{
+                                obj.style[attr]=cur+speed+'px';
+                                }
+                             
+                            }
+            }
+        } ,30);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct dnode{
+    int data;
+    struct dnode*right,*left;
+    
+}Dnode;
+
+
+typedef Dnode *List; 
+List CreatNode(int data)
+{
+    List p=(List)malloc(sizeof(Dnode));
+    p->data=data;
+    p->left=p->right=p;//创建新节点时，让其前驱和后继指针都指向自身;
+    return p;
+}
+
+List  CreateList(int head)//参数给出表头结点数据 （表头结点不作为存放有意义数据的结点）
+{
+    List p=(List)malloc(sizeof(Dnode));
+    p->data=head;
+    p->left=p->right=p;
+    return p;
+}
+
+List InsertNode(List node,int data)//参数1是链表的表头结点，参数2是要插入的结点（结点数据为data）
+{
+ List p=CreatNode(data);
+
+p->left=node->left;
+p->right=node;
+node->left->right=p;
+node->left=p;
+
+ return node;
+}
+
+
+
+List FindNode(List node,int data)// 参数1是链表的表头结点，参数2是要查找的结点（其中结点数据为data）
+{
+List p=node->right;
+while (p!=node&& p->data !=data)
+{
+    p=p->right;
+}
+if(p==node) return NULL;
+return p;
+}
+
+//删除满足指定条件的结点, 返回表头结点, 删除失败返回NULL（失败的原因是不存在该结点）
+List DeleteNode(List node, int data) // 参数1是链表的表头结点，参数2是要删除的结点（其中结点数据为data）
+{
+ List p= FindNode(node, data); 
+ if (NULL == p) return NULL; 
+ p->left->right=p->right;
+ p->right->left=p->left;
+ free(p); 
+ return node;
+}
+
+//获取链表的长度
+int GetLength(List node) // 参数为链表的表头结点
+{
+ int nCount = 0; 
+ List p = node->right; 
+ while (p!= node)
+ {
+     p = p->right;  
+  nCount++;
+ } 
+ return nCount;
+}
+
+//顺序打印整个链表
+void PrintList(List node) // 参数为链表的表头结点
+{
+ List pnode;
+ if (NULL == node) return;
+ pnode= node->right;
+ while (pnode != node)
+ {
+  printf("%d   ", pnode->data);
+  pnode = pnode ->right;
+ } 
+ printf("\n");
+}
+
+void DeleteList(List node) //参数为链表表头结点
+{
+ List pnode = node->right;
+ List ptmp;
+ if (NULL == node) return; 
+ 
+ while (pnode != node)
+ {
+  ptmp = pnode->right;
+  free(pnode);
+  pnode = ptmp;
+ }
+ free(node);
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+#define FALSE 0
+#define TRUE  1
+
+
+void main()
+{
+ int nChoose;
+ int data;
+ bool bFlag = FALSE;
+ List p;
+ List list = CreateList(0);
+ 
+ while(bFlag == FALSE)
+ {
+  printf("Main Menu\n");
+  printf("1.  Insert\n");
+  printf("2.  Delete Node\n");
+  printf("3.  Find\n");
+  printf("4.  Length\n");
+  printf("5.  Positive Print\n");
+ // printf("6.  Negative Print\n");
+  printf("7.  Delete List\n");
+  printf("0.  quit\n\n");
+  
+  scanf("%d", &nChoose);
+  
+  switch(nChoose)
+  {
+  case 1:
+   printf("Input the data to insert:");
+   scanf("%d", &data);
+   list = InsertNode(list, data);
+   PrintList(list);
+   printf("\n");
+   break;
+  case 2: 
+   printf("Input the data to delete: ");
+   scanf("%d", &data);
+   DeleteNode(list, data);
+   PrintList(list);
+   printf("\n");
+   break;
+  case 3:
+   printf("Input the data to find: ");
+   scanf("%d", &data);
+   p = FindNode(list, data);
+      if (NULL != p)
+   {
+    printf("Find succeed!\n");
+ printf("\n");
+   }
+   else
+   {
+    printf("Find failed!\n");
+ printf("\n");
+   }
+   break;
+  case 4:
+   printf("The list's length is %d\n", GetLength(list));
+   printf("\n");
+   break;
+  case 5:
+   PrintList(list);
+   printf("\n");
+   break;
+ // case 6:
+//   ReverPrint(list);
+ //  printf("\n");
+ //  break;
+  case 7:
+   DeleteList(list);
+   printf("\n");
+   break;
+  case 0:
+   DeleteList(list);
+   bFlag = TRUE;
+  }
+ }
+}
+
