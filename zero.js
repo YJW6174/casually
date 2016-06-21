@@ -1,14 +1,15 @@
-function zeros(n){
+function zeros(n) {
     var result = 0;
-    while(n>0){
-        n  = Math.floor(n/5);
+    while (n > 0) {
+        n = Math.floor(n / 5);
+        console.log(n);
         result += n;
     }
-    return result;
-}
+ }
 
-// var n = parseInt(process.argv.slice(2));
-
-for(var i=0;i<100;i++){
-console.log(zeros(i));
-}
+var fs = require('fs');
+fs.unlink('a121',(err) => {
+    // if(err) throw err;
+    console.log('a');
+    console.log('success a121');
+})

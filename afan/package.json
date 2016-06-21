@@ -1,7 +1,7 @@
 {
   "name": "afan",
-  "version": "1.0.6",
-  "description": "",
+  "version": "1.0.7",
+  "description": "A translate tools",
   "main": "afan.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
