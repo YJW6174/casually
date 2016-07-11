@@ -10,5 +10,6 @@
     "afan": "./afan.js"
   },
   "author": "yjw6174@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "homePage":
 }
