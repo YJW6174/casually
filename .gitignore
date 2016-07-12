@@ -40,3 +40,4 @@ node_modules/
 jscoverage_lib/
 
 */.DS_Store
+react-demos/
