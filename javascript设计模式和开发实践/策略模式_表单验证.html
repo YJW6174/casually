@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="http://xxx.com/register" id="registerForm" method="post" style="width:500px;margin:0 auto">
+        请输入用户名:
+        <input type="text" name="username" />
+        <br>
+        请输入密码:
+        <input type="password" name="password" /> 
+        <br>
+        请输入手机号码:
+        <input type="number" name="phoneNumber" />
+        <br>
+        <button> 提交</button>
+    </form>
+</body>
+<script>
+//把验证逻辑封装起来
+var strategies = {
+    isNonEmpty: function(value, errorMsg) {
+        if (value === '') {
+            return errorMsg;
+        }
+    },
+    minLength: function(value, length, errorMsg) {
+        if (value.length < length) {
+            return errorMsg;
+        }
+    },
+    isMobile: function(value, errorMsg) {
+        if (!/(^1[3|5|7|8|9][0-9]{9}$)/.test(value)) {
+            return errorMsg;
+        }
+    }
+}
+
+
+var Validator = function() {
+    this.cache = [];
+}
+Validator.prototype.add = function(dom, rule, errorMsg) {
+    var ary = rule.split(':'); //把 strategy 和 参数分开 minlength:4
+    this.cache.push(function() {
+        var strategy = ary.shift(); //minlength
+        ary.unshift(dom.value); // 18351923237
+        ary.push(errorMsg); //输入错误 
+        //ary = [4,18351923237,输入错误]
+        return strategies[strategy].apply(dom, ary);
+    })
+}
+Validator.prototype.start = function() {
+    for (var i = 0, validatorFunc; validatorFunc = this.cache[i++];) {
+        var msg = validatorFunc();
+        if (msg) {
+            return msg;
+        }
+    }
+}
+
+//validator.add(registerForm.username, 'isNonEmpty', '用户名不能为空');
+//validator.add(registerForm.username, 'minLength:10', '用户名长度不能少于10位');
+
+//Validator 类 ,validator 类作为context,接受用户的请求,并委托给 strategy 对象;
+var validataFunc = function() {
+    var validator = new Validator();
+    validator.add(registerForm.username, 'isNonEmpty', '用户名不能为空');
+   	validator.add(registerForm.password,'minLength:6','密码不能小于6位');
+
+   	var errorMsg = validator.start();
+   	return errorMsg
+}
+
+var registerForm = document.getElementById('registerForm');
+registerForm.onsubmit = function(){
+	var errorMsg = validataFunc();
+	if(errorMsg){
+		alert(errorMsg);
+		return false;
+	}
+}
+
+
+
+</script>
+
+</html>
