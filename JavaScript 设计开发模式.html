@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn"></button>
+</body>
+<script>
+var creatediv = function(html) {
+    var div = document.createElement('div');
+    div.innerHTML = 22222;
+    div.style.display = 'block';
+    document.body.appendChild(div);
+    return div;
+}
+
+var getsingle = function(fn) {
+    var result;
+    return function() {
+        return result || (result = fn.apply(this, arguments));
+    }
+}
+
+// var a = getsingle(function(a,b,c){
+// 	console.log(1);
+// 	return 1231;
+// })
+// var b = getsingle(creatediv);
+// var c = getsingle(creatediv);
+// a();
+// b();
+// b();
+//c();
+
+
+var createSingleDiv1 = getsingle(creatediv);
+//var createSingleDiv2 = getsingle(creatediv('abcde'));
+
+createSingleDiv1();
+createSingleDiv1();
+// var func1 = function() {
+//     var result = 1;
+//     return function() {
+//         console.log()
+//     }
+// }
+</script>
+
+</html>

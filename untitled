@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="btn"></button>
+</body>
+<script>
+	var creatediv = function(html){
+			var div = document.createElement('div');
+			div.innerHTML = html;
+			div.style.display = 'block';
+			document.body.appendChild(div);
+			return div;
+	}
+
+	var getsingle = function(fn){
+		var result;
+		return function(){
+					return result || (result = fn.apply(this,arguments));
+		}
+	}
+
+	var createSingleDiv = getsingle(creatediv('12345'));
+	var createSingleDiv = getsingle(creatediv('abcde'));
+
+	var func1 = function(){
+		var result = 1;
+		return function(){
+			console.log()
+		}
+	}
+</script>
+</html>
