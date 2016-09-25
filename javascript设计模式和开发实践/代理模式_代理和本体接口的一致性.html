@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title> 代理模式</title>
+</head>
+
+<body>
+</body>
+<script>
+var imgurl = 'https://img.alicdn.com/tps/TB1ouuNNpXXXXa1XFXXXXXXXXXX-990-190.jpg_q70.jpg';
+var myImage = (function() {
+    var imgNode = document.createElement('img');
+    document.body.appendChild(imgNode);
+    return function(src) {
+        imgNode.src = src;
+    }
+}());
+
+var proxyImage = (function() {
+    var img = new Image; // 这里 new 出来的 image 是做什么用， 和 createElement img 有什么区别
+    img.onload = function() {
+        myImage(this.src)
+    }
+    return function(src) {
+        myImage('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1019107236,2319468473&fm=21&gp=0.jpg');
+        img.src = src;
+    }
+
+}())
+
+proxyImage(imgurl)
+</script>
+
+</html>
