@@ -15,7 +15,7 @@ var proxyMult = (function(){
 	return function(){
 		var args = Array.prototype.join.call(arguments,',');
 		if(args in cache){
-			console.log(args);
+			console.log(args);	
 			return cache[args];
 		}
 		return cache[args] = mult.apply(this,arguments);
