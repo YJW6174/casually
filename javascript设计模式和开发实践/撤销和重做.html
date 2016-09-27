@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="replay" style="height:300px;width:300px;background:red">回放</div>
+</body>
+<script>
+var Ryu = {
+    attack: function() {
+        console.log('attack');
+    },
+    defense: function() {
+        console.log('defense');
+    },
+    jump: function() {
+        console.log('jump');
+    },
+    crouch: function() {
+        console.log('crouch/ 下蹲');
+    }
+};
+
+var makeCommand = function(receiver, action) {
+    return function() {
+        receiver[action]();
+    }
+};
+
+var commands = {
+    "119": "jump",
+    "115": "crouch",
+    "97": "defense", //a
+    "100": 'attack'
+};
+
+var commandStack = [];
+
+document.onkeypress = function(ev) {
+    var keycode = ev.keyCode,
+        command = makeCommand(Ryu, commands[keycode]);
+    if (command) {
+        command();
+        commandStack.push(command);
+    }
+}
+
+document.getElementById('replay').onclick = function() {
+    var command;
+    while (command = commandStack.shift()) {
+        command();
+    }
+}
+</script>
+
+</html>

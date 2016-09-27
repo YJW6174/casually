@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="position:absolute;background:blue" id="div1">
+        我是 div1
+    </div>
+    <div style="position:absolute;background:red;top:200px" id="div2">
+        我是 div2
+    </div>
+    <div id="ball" style="position:absolute;height:50px;width:50px;background:#000">
+    </div>
+    <br> 输入小球移动后的位置:
+    <input type="text" id="pos">
+    <br>
+    <button id="moveBtn"> 开始移动 </button>
+    <button id="cancel">cancel</button>
+</body>
+<script>
+var tween = {
+    linear: function(t, b, c, d) {
+        //t 动画已消耗时间
+        //b 小球原始位置
+        //c 小球目标位置
+        //d 动画持续的总时间?
+        //返回  动画元素应该处在的当前位置
+        return c * t / d + b;
+    },
+    easeIn: function(t, b, c, d) {
+        return c * (t /= d) * t + b;
+    },
+    strongEaseIn: function(t, b, c, d) {
+        return c * (t /= d) * t * t * t * t + b;
+    },
+    strongEaseOut: function(t, b, c, d) {
+        return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+    },
+    sineaseIn: function(t, b, c, d) {
+        return c * (t /= d) * t * t + b
+    },
+    sineaseOut: function(t, b, c, d) {
+        return c * ((t = t / d - 1) * t * t + 1) + b
+    }
+}
+
+//animate 类, animate构造函数,接受一个 dom 节点
+var Animate = function(dom) {
+    this.dom = dom;
+    this.startTime = 0;
+    this.startPos = 0;
+    this.endPos = 0;
+    this.propertyName = null;
+    this.easing = null;
+    this.duration = null;
+}
+
+//animate start 方法,启动这个动画
+// propertyName 运动的 css 属性名
+//  endPos 目标位置
+//   duration 动画持续时间
+//    easing 缓动动画  
+Animate.prototype.start = function(propertyName, endPos, duration, easing) {
+        this.startTime = +new Date();
+        this.startPos = this.dom.getBoundingClientRect()[propertyName];
+        this.propertyName = propertyName;
+        this.endPos = endPos;
+        this.duration = duration;
+        this.easing = tween[easing];
+        var self = this;
+        var timeID = setInterval(function() {
+            if (self.step() == false) {
+                clearInterval(timeID);
+            }
+        }, 19);
+    }
+    // 代表小球每一帧要做的事
+Animate.prototype.step = function() {
+    var t = +new Date();
+    if (t >= this.startTime + this.duration) {
+        this.update(this.endPos);
+        return false;
+    }
+    var pos = this.easing(t - this.startTime, this.startPos, this.endPos - this.startPos, this.duration);
+    //pos 为小球的当前位置
+    this.update(pos);
+}
+
+Animate.prototype.update = function(pos) {
+    this.dom.style[this.propertyName] = pos + 'px';
+}
+
+var div1 = document.getElementById('div1');
+var div2 = document.getElementById('div2');
+var animate1 = new Animate(div1);
+var animate2 = new Animate(div2);
+div1.onclick = function() {
+    var animate = new Animate(div1)
+    animate.start('left', 500, 1000, 'strongEaseOut');
+}
+
+div2.onclick = function() {
+    new Animate(div2).start('top', 100, 500, 'strongEaseIn')
+}
+
+
+var ball = document.getElementById('ball');
+var pos = document.getElementById('pos');
+var moveBtn = document.getElementById('moveBtn');
+var cancelBtn = document.getElementById('cancel');
+var MoveCommand = function(receiver, pos) {
+    this.receiver = receiver;
+    this.pos = pos;
+    this.oldpos = null
+}
+
+MoveCommand.prototype.execute = function() {
+    this.receiver.start('left', this.pos, 1000, 'strongEaseOut');
+    this.oldpos = this.receiver.dom.getBoundingClientRect()[this.receiver.propertyName]; //this.pos;
+    //记录小球开始移动时的位置
+}
+
+MoveCommand.prototype.undo = function() {
+    this.receiver.start('left', this.oldPos, 1000, 'strongEaseOut')
+}
+var moveCommand;
+
+moveBtn.onclick = function() {
+    var animate = new Animate(ball);
+    moveCommand = new MoveCommand(animate, pos.value);
+    moveCommand.execute();
+}
+
+cancelBtn.onclick = function(){
+    moveCommand.undo();
+}
+</script>
+
+</html>
