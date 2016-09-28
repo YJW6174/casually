@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<button id="button">
+    这是一个 button
+</button>
+</body>
+<script>
+    var MacroCommand = function () {
+        return {
+            commandList: [],
+            add: function (command) {
+                this.commandList.push(command);
+            },
+            execute: function () {
+                for (var i = 0, command; command = this.commandList[i++];) {
+                    command.execute();
+                }
+            }
+        }
+    };
+
+    var openCommand = {
+        execute: function () {
+            console.log('打开空调');
+        }
+    };
+
+    var macroCommand1 = MacroCommand();
+    macroCommand1.add(openCommand);
+
+
+    var macroCommand = MacroCommand();
+    macroCommand.add(macroCommand1);
+
+    console.log(JSON.stringify(macroCommand));
+    var setCommand = (function (command) {
+        document.getElementById('button').onclick = function () {
+            command.execute();
+        }
+    })(macroCommand);
+</script>
+</html>
