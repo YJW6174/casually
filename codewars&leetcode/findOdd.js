@@ -8,15 +8,15 @@
 function findOdd(A) {
     //happy coding!
     var obj = {};
-    for(var i = 0; i<A.length;i++){
-        if(obj[A[i]]){
+    for (var i = 0; i < A.length; i++) {
+        if (obj[A[i]]) {
             obj[A[i]]++;
         } else {
             obj[A[i]] = 1;
         }
     }
-    for(var key in obj){
-        if((obj[key] % 2 )!= 0){
+    for (var key in obj) {
+        if ((obj[key] % 2) != 0) {
             return parseInt(key);
         }
     }
@@ -24,12 +24,11 @@ function findOdd(A) {
 }
 //console.log(findOdd([5,4,3,2,1,5,4,3,2]));
 
-var ar = [1,2,3];
-var ar2 = [11,22,33];
-var obj = {	a : 0,	b : 0	};
+var ar = [1, 2, 3];
+var ar2 = [11, 22, 33];
+var obj = { a: 0, b: 0 };
 var myar = [];
-for(var i = 0; i < 3; i ++)
-{
+for (var i = 0; i < 3; i++) {
     obj.a = ar[i];
     obj.b = ar2[i];
     myar.push(obj)

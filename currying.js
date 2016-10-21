@@ -10,7 +10,7 @@
 
 function toCurrying(fn) {
     var args = [];
-    return function () {
+    return function() {
         if (arguments.length === 0) {
             return fn.apply(this, args);
         } else {
@@ -24,7 +24,7 @@ function toCurrying(fn) {
 }
 
 function add() {
-    return ;
+    return;
 }
 
 var curriedAdd = toCurrying(add);

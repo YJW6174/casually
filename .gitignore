@@ -41,3 +41,5 @@ jscoverage_lib/
 
 */.DS_Store
 react-demos/
+.idea
+.vscode

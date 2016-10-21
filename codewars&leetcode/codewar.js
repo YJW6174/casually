@@ -12,3 +12,10 @@ function validateCode(code) {
 }
 
 console.log(validateCode(1));
+
+function sbsaf(length){
+    for (var i = 0 ; i < arguments.length ; i++){
+        console.log(i); }
+}
+
+sbsaf('a', 3, 4, 5, 5, 'd');
