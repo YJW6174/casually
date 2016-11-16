@@ -14,7 +14,6 @@ function shellSort(arr) {
             for (var j = i - gap; j >= 0 && arr[j] > temp; j -= gap) {
                 arr[j + gap] = arr[j];
             }
-
             //while(temp > a[j])
             arr[j + gap] = temp;
         }
