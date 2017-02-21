@@ -2,7 +2,7 @@ var Event = (function(){
 	var clientList = {},
 		listen,
 		trigger,
-		move;
+		remove;
 
 	listen = function (key, fn){
 		if(!clientList[key]){
@@ -51,4 +51,7 @@ Event.listen('squareMeter88',function(price){
 	console.log('价格=' + price);
 })
 
+Event.listen('squareMeter88',function(price){
+	console.log('价格2=' + price);
+})
 Event.trigger('squareMeter88',20000);

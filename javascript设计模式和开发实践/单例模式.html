@@ -17,14 +17,23 @@ var creatediv = function(html) {
     document.body.appendChild(div);
     return div;
 }
+//
+//var getsingle = function(fn) {
+//    var result;
+//    return function() {
+//        return result || (result = fn.apply(this,arguments));// (result = fn.apply(this, arguments));
+//    }
+//}
 
-var getsingle = function(fn) {
+
+var getSingle = function(fn){
     var result;
-    return function() {
-        return result || (result = fn.apply(this, arguments));
+    return function(){
+        return function(){
+            return result || (result = fn.apply(this,argum))
+        }
     }
 }
-
 // var a = getsingle(function(a,b,c){
 // 	console.log(1);
 // 	return 1231;
@@ -37,7 +46,7 @@ var getsingle = function(fn) {
 //c();
 
 
-var createSingleDiv1 = getsingle(creatediv);
+var createSingleDiv1 = getSingle(creatediv);
 //var createSingleDiv2 = getsingle(creatediv('abcde'));
 
 createSingleDiv1();
@@ -48,6 +57,6 @@ createSingleDiv1();
 //         console.log()
 //     }
 // }
-</script>
 
+</script>
 </html>

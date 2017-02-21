@@ -133,3 +133,10 @@ var Event = (function() {
     return Event;
 
 })()
+
+
+/******* 先发布,后订阅 **********/
+Event.trigger('click',1);
+Event.listen('click',function(a){
+    console.log(a);
+})

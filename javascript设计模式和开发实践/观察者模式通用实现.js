@@ -1,10 +1,11 @@
 var event = {
-    clientList: [],
+    clientList: {},
     listen: function(key, fn) {
         if (!this.clientList[key]) {
             this.clientList[key] = [];
         }
         this.clientList[key].push(fn);
+
     },
     trigger: function() {
         var key = Array.prototype.shift.call(arguments),

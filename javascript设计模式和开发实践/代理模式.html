@@ -12,10 +12,10 @@
 
 var imgurl = 'https://img.alicdn.com/tps/TB1ouuNNpXXXXa1XFXXXXXXXXXX-990-190.jpg_q70.jpg';
 var myImage = (function() {
-    var imgNode = document.createElement('img');
-    console.log('xxx');
-    document.body.appendChild(imgNode);
-    return {
+    var imgNode =  new Image//document.createElement('img');  //创建一个img节点
+
+    document.body.appendChild(imgNode); // 将img节点放到documen上
+    return { //返回一个方法,功能是 设置imgNode 的 src
         setSrc: function(src) {
             imgNode.src = src;
         }
@@ -24,14 +24,14 @@ var myImage = (function() {
 //myImage.setSrc(imgurl)
 
 var proxyImage = (function(){
-	var img = new Image;//这里 new 出来的 image 是做什么用， 和 createElement img 有什么区别
-	img.onload = function(){
-		myImage.setSrc(this.src)
-	}
+	var proxyimg = new Image;//这里 new 出来的 image 是做什么用，
+    proxyimg.onload = function(){
+		myImage.setSrc(this.src);
+	} //这个 img onload 是设置myImage的.
 	return {
 		setSrc:function(src){
 			myImage.setSrc('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1019107236,2319468473&fm=21&gp=0.jpg');
-			img.src = src;
+            proxyimg.src = src;
 		}
 	}
 }())

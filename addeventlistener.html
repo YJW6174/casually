@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+<div id="btn">
+	而富饶发放大法
+</div>
+</body>
+<script>
+var Something = function(element) {
+    // |this| is a newly created object
+    this.name = 'Something Good';
+    this.onclick1 = function(event) {
+    	console.log('onclick1');
+        console.log(this.name); // undefined, as |this| is the element
+    };
+    this.onclick2 = function(event) {
+    	console.log('onclick2');
+        console.log(this.name); // 'Something Good', as |this| is bound to newly created object
+    };
+    element.addEventListener('click', this.onclick1, false);
+    element.addEventListener('click', this.onclick2.bind(this), false); // Trick
+}
+var s = new Something(document.getElementById('btn'));
+</script>
+
+</html>
