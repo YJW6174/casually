@@ -34,7 +34,7 @@ for (var i = 0; i <= 5; i++) {
 }
 
 //2
-function cb(num) {
+function cb2(num) {
 	console.log('BBB')
     return function() {
         console.log(num)
@@ -42,15 +42,15 @@ function cb(num) {
 }
 
 for (var i = 0; i <= 5; i++) {
-    setTimeout(cb(i), 5000);
+    setTimeout(cb2(i), 5000);
 }
 
 //3
-function cb(num) {
+function cb3(num) {
 	console.log('CCC')
     console.log(num)
 }
 
 for (var i = 0; i <= 5; i++) {
-    setTimeout(cb.bind(this, i), 5000);
+    setTimeout(cb3.bind(this, i), 5000);
 }
