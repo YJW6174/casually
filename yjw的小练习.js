@@ -89,7 +89,7 @@
 			} else {
 				return num * f(num - 1);
 			}
-		})
+		});
 
 		//8.闭包
 		function createFunction() {
@@ -112,7 +112,7 @@
 		}
 		console.log(createFunction());
 		//9.模仿块级作用域
-		(function () {})()
+		(function () {})();
 		//10.访问器属性
 		var book = {
 			_year: 2004,//_year 下划线 表示只能通过对象方法访问的属性
