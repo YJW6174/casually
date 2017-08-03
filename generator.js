@@ -114,3 +114,30 @@ for (let node of inorder(tree)) {
 }
 
 console.log(result);
+
+// yield 和 for...of 实现 斐波拉契数列
+
+function *fibonacci() {
+    let [prev, curr] = [0, 1];
+    for (; ;) {
+        [prev, curr] = [curr, prev + curr];
+        yield curr;
+    }
+}
+
+for (let n of fibonacci()) {
+    if (n > 100) break;
+    console.log(n);
+}
+
+function sfibonacci(n) {
+    let [prev, curr] = [0, 1];
+    for (let i = 0; i < n; i++) {
+        [prev, curr] = [curr, prev + curr];
+        console.log(prev);
+    }
+}
+sfibonacci(10);
+
+// yield*表达式，用来在一个 Generator 函数里面执行另一个 Generator 函数。 * 会把yiled 后面对象 的遍历器执行
+

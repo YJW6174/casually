@@ -34,3 +34,32 @@ curriedAdd(3);
 curriedAdd(4);
 curriedAdd(5);
 console.log(curriedAdd());
+
+
+
+var currying = function (fn){
+    var args = [];
+    return function(){
+        if (arguments.length === 0) {
+            return fn.apply(this,args)
+        } else {
+            [].push.apply(args,arguments)
+            return arguments.callee;
+        }
+    }
+}
+
+var cost = (function(){
+    var money = 0;
+    return function(){
+        for (var i = arguments.length - 1; i >= 0; i--) {
+            money +=arguments[i]
+        }
+        return money;
+    }
+})();
+
+var curryingcost = currying(cost);
+curryingcost(10);
+curryingcost(20);
+curryingcost(30);
